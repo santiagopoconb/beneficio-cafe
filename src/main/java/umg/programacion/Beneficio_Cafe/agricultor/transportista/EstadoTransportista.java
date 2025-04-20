@@ -1,4 +1,4 @@
-package umg.programacion.Beneficio_Cafe.agricultor;
+package umg.programacion.Beneficio_Cafe.agricultor.transportista;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

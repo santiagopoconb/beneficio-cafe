@@ -1,4 +1,4 @@
-package umg.programacion.Beneficio_Cafe.agricultor;
+package umg.programacion.Beneficio_Cafe.agricultor.transportista;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +25,16 @@ public class CatalogoTransportista {
 
     private String usuarioCreacion;
     private LocalDateTime fechaCreacion;
+
+    public CatalogoTransportista (DTOCrearTransportista nuevoRegistro){
+        this.nitTransportista = nuevoRegistro.nitTransportista();
+        this.nombreTransportista = nuevoRegistro.nombreTransportista();
+
+        EstadoTransportista estadoActivo = new EstadoTransportista();
+        estadoActivo.setIdEstadoTransportista(1L);
+        this.estadoTransportista = estadoActivo;
+
+        this.usuarioCreacion = nuevoRegistro.usuarioCreacion();
+        this.fechaCreacion = LocalDateTime.now();
+    }
 }
