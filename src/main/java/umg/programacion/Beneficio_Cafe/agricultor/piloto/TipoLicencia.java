@@ -1,18 +1,18 @@
-package umg.programacion.Beneficio_Cafe.agricultor;
+package umg.programacion.Beneficio_Cafe.agricultor.piloto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name="tipo_placa", schema = "agricultor")
-@Entity(name = "TipoPlaca")
+@Table(name="tipo_licencia", schema = "agricultor")
+@Entity(name = "TipoLicencia")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoPlaca {
+public class TipoLicencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idTipo;
-    private String tipoPlaca;
+    private String tipoLicencia;
 }
