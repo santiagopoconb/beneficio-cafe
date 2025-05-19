@@ -1,0 +1,32 @@
+<div class="transportista-container">
+  <div class="encabezado">
+    <h2>Listado de Transportistas</h2>
+    <button class="btn-nuevo" (click)="navegarANuevo()">+ Nuevo Transportista</button>
+    <button class="btn-regresar" (click)="irAInicio()">🏠 Inicio</button>
+  </div>
+
+  <div class="tabla-scroll">
+    <table class="transportista-table">
+      <thead>
+        <tr>
+          <th>NIT</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transportistas">
+          <td>{{ t.nitTransportista }}</td>
+          <td>{{ t.nombreTransportista }}</td>
+          <td>{{ t.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="paginacion">
+    <button (click)="paginaAnterior()" [disabled]="paginaActual === 0">Anterior</button>
+    <span>Página {{ paginaActual + 1 }} de {{ totalPaginas }}</span>
+    <button (click)="siguientePagina()" [disabled]="paginaActual >= totalPaginas - 1">Siguiente</button>
+  </div>
+</div>

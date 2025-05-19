@@ -1,0 +1,28 @@
+<div class="transportista-container">
+  <h2>Registrar Nuevo Transportista</h2>
+
+  <form (ngSubmit)="guardar()" #form="ngForm">
+    <div class="form-group">
+      <label for="nit">NIT</label>
+      <input type="text" id="nit" name="nit" [(ngModel)]="transportista.nitTransportista" required pattern="^[a-zA-Z0-9]{1,8}$"
+    maxlength="8" placeholder = "NIT sin guion"/>
+    </div>
+
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" [(ngModel)]="transportista.nombreTransportista" required />
+    </div>
+
+    <div class="paginacion">
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>
+<!-- Modal de Éxito -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <p>{{ mensajeExito }}</p>
+    <button (click)="cerrarModal()">Aceptar</button>
+  </div>
+</div>

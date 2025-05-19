@@ -1,0 +1,29 @@
+import { Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'inicio',
+    loadComponent: () => import('./pages/inicio/inicio.component').then(m => m.InicioComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+  path: 'transportista',
+  loadComponent: () =>
+    import('./pages/transportista/transportista.component').then(m => m.TransportistaComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+  path: 'transportista/nuevo',
+  loadComponent: () => import('./pages/transportista/nuevo-transportista/nuevo-transportista.component')
+    .then(m => m.NuevoTransportistaComponent),
+    canActivate: [AuthGuard]
+  },
+  { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL
+];

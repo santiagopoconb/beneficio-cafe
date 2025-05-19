@@ -1,0 +1,17 @@
+<div class="dashboard-container">
+  <!-- Menú lateral -->
+  <nav class="sidebar">
+    <h3>Menú</h3>
+    <ul>
+      <li><a routerLink="/transportista">Transportista</a></li>
+      <li><a routerLink="/transporte">Transporte</a></li>
+      <li><a routerLink="/piloto">Piloto</a></li>
+      <li><a routerLink="/pesaje">Pesaje</a></li>
+      <li><a href="#" (click)="cerrarSesion()">Salir</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

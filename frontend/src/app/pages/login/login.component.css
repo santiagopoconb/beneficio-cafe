@@ -1,0 +1,66 @@
+/* Fondo de página */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+/* Contenedor principal centrado */
+.login-container {
+  width: 350px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Encabezado */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Etiquetas y campos */
+.login-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+/* Botón */
+.login-container button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #5a67d8; /* azul neutro */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #434190;
+}
+
+/* Mensaje de error */
+.error {
+  color: #d9534f;
+  text-align: center;
+  margin-top: 1rem;
+}
