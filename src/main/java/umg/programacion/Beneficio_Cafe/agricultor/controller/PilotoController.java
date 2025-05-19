@@ -12,7 +12,7 @@ import umg.programacion.Beneficio_Cafe.agricultor.piloto.*;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTranportistaReposity;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTransportista;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.EstadoTransportistaReposity;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/piloto")
 public class PilotoController {

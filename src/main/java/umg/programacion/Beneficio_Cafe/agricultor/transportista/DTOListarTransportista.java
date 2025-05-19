@@ -2,19 +2,13 @@ package umg.programacion.Beneficio_Cafe.agricultor.transportista;
 
 import java.time.LocalDateTime;
 
-public record DTOListarTransportista(Long idTransportista,
-                                     String nitTransportista,
+public record DTOListarTransportista(String nitTransportista,
                                      String nombreTransportista,
-                                     Integer estado,
-                                     String usuarioCreacion,
-                                     LocalDateTime fechaCreacion) {
+                                     String estado) {
 
     public DTOListarTransportista (CatalogoTransportista catalogoTransportista){
-        this(catalogoTransportista.getIdTransportista(),
-                catalogoTransportista.getNitTransportista(),
+        this(catalogoTransportista.getNitTransportista(),
                 catalogoTransportista.getNombreTransportista(),
-                (int) catalogoTransportista.getEstadoTransportista().getIdEstadoTransportista(),
-                catalogoTransportista.getUsuarioCreacion(),
-                catalogoTransportista.getFechaCreacion());
+                catalogoTransportista.getEstadoTransportista().getEstadoTransportista());
     }
 }

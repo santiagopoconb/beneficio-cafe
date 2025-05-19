@@ -13,6 +13,9 @@ import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTranport
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTransportista;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.EstadoTransportistaReposity;
 
+import java.util.Map;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/transporte")
 public class TransporteController {
@@ -40,7 +43,7 @@ public class TransporteController {
         nuevo.setIdPlaca(tipoPlaca);
 
         transporteReposity.save(nuevo);
-        return ResponseEntity.ok("El Transporte se ha creado con exito");
+        return ResponseEntity.ok(Map.of("mensaje","El Transporte se ha creado con exito"));
     }
 
     @GetMapping
