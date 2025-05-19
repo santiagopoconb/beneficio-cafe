@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,6 +25,13 @@ public class TransportistaController {
     @GetMapping//Listar transportistas
     public ResponseEntity <Page<DTOListarTransportista>> listarTransportista(@PageableDefault(size = 10) Pageable paginacion){
         return ResponseEntity.ok(transportistaReposity.findAll(paginacion).map(DTOListarTransportista::new));
+    }
+
+    @GetMapping("/all")
+    public  ResponseEntity<List<DTOListarTransportista>> listarTranportistaAll(){
+        return ResponseEntity.ok(transportistaReposity.findAll()
+                .stream()
+                .map(DTOListarTransportista::new).toList());
     }
 
     @PostMapping

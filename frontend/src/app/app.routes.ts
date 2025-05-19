@@ -25,5 +25,18 @@ export const routes: Routes = [
     .then(m => m.NuevoTransportistaComponent),
     canActivate: [AuthGuard]
   },
+  {
+  path: 'transporte',
+  loadComponent: () =>
+    import('./pages/transporte/transporte.component').then(m => m.TransporteComponent),
+   canActivate: [AuthGuard]
+},
+  {
+    path: 'nuevo-transporte',
+    loadComponent: () =>
+      import('./pages/transporte/nuevo-transporte/nuevo-transporte.component').then(m => m.NuevoTransporteComponent),
+    canActivate: [AuthGuard]
+  },
+
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL
 ];

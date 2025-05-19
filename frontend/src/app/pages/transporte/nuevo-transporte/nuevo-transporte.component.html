@@ -1,0 +1,59 @@
+<div class="transportista-container">
+  <h2>Nuevo Transporte</h2>
+  <form [formGroup]="transporteForm" (ngSubmit)="guardar()">
+    <label>NIT Transportista:</label>
+    <select formControlName="nitTransportista" required>
+      <option *ngFor="let t of transportistas" [value]="t.nitTransportista">
+       {{ t.nombreTransportista }}
+      </option>
+    </select>
+
+    <label>Tipo de Placa:</label>
+    <select formControlName="tipoPlaca" required>
+        <option *ngFor="let tipo of tiposPlaca" [value]="tipo.tipoPlaca">
+        {{ tipo.tipoPlaca }}
+     </option>
+    </select>
+
+    <label>Placa:</label>
+    <input type="text" formControlName="placa">
+
+    <label>Marca:</label>
+    <input type="text" formControlName="marca">
+
+    <label>Color:</label>
+    <input type="text" formControlName="color">
+
+    <label>Línea:</label>
+    <input type="text" formControlName="linea">
+
+    <label>Modelo:</label>
+    <input type="number" formControlName="modelo">
+
+    <label>Observaciones:</label>
+    <textarea formControlName="observaciones" rows="3"></textarea>
+
+    <div class="acciones">
+      <button type="submit" [disabled]="transporteForm.invalid">Guardar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal de Éxito -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <p>{{ mensajeExito }}</p>
+    <button (click)="cerrarModal()">Aceptar</button>
+  </div>
+</div>
+
+<!-- Modal de Error -->
+<div class="modal error" *ngIf="mostrarModalError">
+  <div class="modal-contenido error">
+    <p>{{ mensajeError }}</p>
+    <button class="btn-error" (click)="cerrarModalError()">Aceptar</button>
+  </div>
+</div>
+
+

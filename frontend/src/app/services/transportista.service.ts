@@ -13,4 +13,8 @@ export class TransportistaService {
   obtenerTransportistas(page: number = 0): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?page=${page}`);
   }
+
+  listarTodos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
 }

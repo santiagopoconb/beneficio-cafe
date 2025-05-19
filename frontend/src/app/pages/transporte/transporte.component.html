@@ -1,0 +1,46 @@
+<div class="transportista-container">
+  <div class="encabezado">
+    <h2>Listado de Transporte</h2>
+    <button class="btn-nuevo" (click)="irANuevo()">+ Nuevo Transporte</button>
+    <button class="btn-regresar" (click)="regresar()">🏠 Inicio</button>
+  </div>
+
+  <div class="tabla-scroll">
+    <table class="transportista-table">
+      <thead>
+        <tr>
+          <th>NIT</th>
+          <th>Tipo Placa</th>
+          <th>Placa</th>
+          <th>Marca</th>
+          <th>Color</th>
+          <th>Línea</th>
+          <th>Modelo</th>
+          <th>Disponible</th>
+          <th>Estado</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transporteList">
+          <td>{{ t.nitTransportista }}</td>
+          <td>{{ t.tipoPlaca }}</td>
+          <td>{{ t.placa }}</td>
+          <td>{{ t.marca }}</td>
+          <td>{{ t.color }}</td>
+          <td>{{ t.linea }}</td>
+          <td>{{ t.modelo }}</td>
+          <td>{{ t.disponible ? 'Sí' : 'No' }}</td>
+          <td>{{ t.estado }}</td>
+          <td>{{ t.observaciones }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="paginacion">
+    <button (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+    <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+    <button (click)="siguientePagina()" [disabled]="page >= totalPages - 1">Siguiente</button>
+  </div>
+</div>

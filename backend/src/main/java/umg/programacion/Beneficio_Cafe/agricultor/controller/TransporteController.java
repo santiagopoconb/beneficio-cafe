@@ -13,6 +13,7 @@ import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTranport
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTransportista;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.EstadoTransportistaReposity;
 
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -49,6 +50,13 @@ public class TransporteController {
     @GetMapping
     public ResponseEntity<Page<DTOListarTransporte>> listarTransporte(Pageable paginacion){
         return ResponseEntity.ok(transporteReposity.findAll(paginacion).map(DTOListarTransporte::new));
+    }
+
+    @GetMapping("/tipoPlaca")
+    public ResponseEntity<List<DTOTipoPlaca>> listaTipoPlaca(){
+        return ResponseEntity.ok(tipoPlacaReposity.findAll()
+                .stream()
+                .map(DTOTipoPlaca::new).toList());
     }
 
 }
