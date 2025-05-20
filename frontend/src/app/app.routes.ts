@@ -47,6 +47,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/piloto/nuevo-piloto/nuevo-piloto.component').then(m => m.NuevoPilotoComponent),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'pesaje',
+    loadComponent: () => import('./pages/pesaje/pesaje.component').then(m => m.PesajeComponent),
+    canActivate: [AuthGuard]
+  },
+    {
+    path: 'crear-pesaje',
+    loadComponent: () => import('./pages/pesaje/crear-pesaje/crear-pesaje.component').then(m => m.CrearPesajeComponent),
+    canActivate: [AuthGuard]
+  },
 
 
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL

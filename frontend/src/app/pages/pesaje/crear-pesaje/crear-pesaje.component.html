@@ -1,0 +1,63 @@
+<div class="transportista-container">
+    <div class="encabezado">
+        <h2>Crear Pesaje</h2>
+        <button class="btn-regresar" (click)="cancelar()">← Cancelar</button>
+    </div>
+  
+  
+  
+  
+    <form [formGroup]="formularioPesaje" (ngSubmit)="guardar()">
+    
+    <div class="form-group">
+      <label for="idMedidaPeso">Medida</label>
+        <select id="idMedidaPeso" formControlName="idMedidaPeso">
+            <option value="">Seleccione una medida</option>
+            <option *ngFor="let m of medidas" [value]="m.idMedidaPeso">
+                {{ m.medida }}
+            </option>
+        </select>
+        <div class="error" *ngIf="formularioPesaje.get('idMedidaPeso')?.touched && formularioPesaje.get('idMedidaPeso')?.invalid">
+        La medida es obligatoria.
+      </div>
+
+
+    </div>
+
+    <div class="form-group">
+      <label for="pesoTotal">Peso Total</label>
+      <input type="number" id="pesoTotal" formControlName="pesoTotal" min="0.01" step="0.01" />
+      <div class="error" *ngIf="formularioPesaje.get('pesoTotal')?.invalid && formularioPesaje.get('pesoTotal')?.touched">
+        El peso debe ser mayor a 0.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <input id="estado" formControlName="estado" readonly />
+    </div>
+
+    <button class="btn-nuevo" type="submit" [disabled]="formularioPesaje.invalid">Guardar</button>
+  </form>
+
+ <!-- Modal de Éxito -->
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <h3>✅ Registro exitoso</h3>
+      <p>{{ mensajeExito }}</p>
+      <button (click)="cerrarModal()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Error -->
+  <div *ngIf="mostrarModalError" class="modal error">
+    <div class="modal-content">
+      <h3>❌ Error al guardar</h3>
+      <p>{{ mensajeError }}</p>
+      <button (click)="cerrarModalError()">Cerrar</button>
+    </div>
+  </div>
+
+</div>
+
+

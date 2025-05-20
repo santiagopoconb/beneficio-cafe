@@ -21,7 +21,7 @@ public class PesajeController {
     @Autowired
     private PesajeReposity pesajeReposity;
 
-    @PostMapping
+    @PostMapping("/crear-pesaje")
     public ResponseEntity<?> crearPesaje(@RequestBody @Valid DTOCrearPesaje dtoCrearPesaje){
         MedidasPeso medidaPeso = medidasPesoReposity.findByIdMedida(dtoCrearPesaje.idMedidaPeso())
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"No se encontró la medida seleccionada"));
@@ -33,7 +33,7 @@ public class PesajeController {
         return ResponseEntity.ok(Map.of("mensaje", "El pesaje se ha creado con éxito"));
     }
 
-    @GetMapping("/medidaPeso")
+        @GetMapping("/medidaPeso")
     public ResponseEntity<List<DTOMedidasPeso>> medidasPeso(){
         return ResponseEntity.ok(medidasPesoReposity.findAll()
                 .stream().map(DTOMedidasPeso::new).toList());
