@@ -1,0 +1,99 @@
+<div class="transportista-container">
+  <div class="encabezado">
+    <h2>Nuevo Piloto</h2>
+    <button class="btn-regresar" (click)="cancelar()">← Cancelar</button>
+  </div>
+
+  <form [formGroup]="pilotoForm" (ngSubmit)="guardar()">
+    <div class="form-group">
+      <label for="nitTransportista">Transportista</label>
+      <select id="nitTransportista" formControlName="nitTransportista" required>
+        <option value="">Seleccione un transportista</option>
+        <option *ngFor="let t of transportistas" [value]="t.nitTransportista">
+          {{ t.nombreTransportista }}
+        </option>
+      </select>
+      <div class="error" *ngIf="pilotoForm.get('nitTransportista')?.touched && pilotoForm.get('nitTransportista')?.invalid">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cui">CUI</label>
+      <input id="cui" type="text" formControlName="cui">
+      <div class="error" *ngIf="pilotoForm.get('cui')?.touched && pilotoForm.get('cui')?.invalid">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" formControlName="nombre">
+      <div class="error" *ngIf="pilotoForm.get('nombre')?.touched && pilotoForm.get('nombre')?.invalid">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha Nacimiento</label>
+      <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" (blur)="validarEdad()">
+      <div class="error" *ngIf="pilotoForm.get('fechaNacimiento')?.hasError('menorEdad')">
+        Menor de edad
+      </div>
+      <div class="error" *ngIf="pilotoForm.get('fechaNacimiento')?.touched && pilotoForm.get('fechaNacimiento')?.hasError('required')">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoLicencia">Tipo Licencia</label>
+      <select id="tipoLicencia" formControlName="tipoLicencia">
+        <option value="">Seleccione una licencia</option>
+        <option *ngFor="let tipo of tiposLicencia" [value]="tipo.tipoLicencia">
+          {{ tipo.tipoLicencia }}
+        </option>
+      </select>
+      <div class="error" *ngIf="pilotoForm.get('tipoLicencia')?.touched && pilotoForm.get('tipoLicencia')?.invalid">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaVencimiento">Fecha Vencimiento Licencia</label>
+      <input id="fechaVencimiento" type="date" formControlName="fechaVencimiento" (blur)="validarVencimiento()">
+      <div class="error" *ngIf="pilotoForm.get('fechaVencimiento')?.hasError('licenciaVencida')">
+        Licencia vencida
+      </div>
+      <div class="error" *ngIf="pilotoForm.get('fechaVencimiento')?.touched && pilotoForm.get('fechaVencimiento')?.hasError('required')">
+        Campo requerido
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="observaciones">Observaciones</label>
+      <textarea id="observaciones" formControlName="observaciones"></textarea>
+    </div>
+
+    <button class="btn-nuevo" type="submit" [disabled]="pilotoForm.invalid || mostrarModal || mostrarModalError">
+        Guardar
+    </button>
+  </form>
+
+  <!-- Modal de Éxito -->
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <h3>✅ Registro exitoso</h3>
+      <p>{{ mensajeExito }}</p>
+      <button (click)="cerrarModal()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Error -->
+  <div *ngIf="mostrarModalError" class="modal error">
+    <div class="modal-content">
+      <h3>❌ Error al guardar</h3>
+      <p>{{ mensajeError }}</p>
+      <button (click)="cerrarModalError()">Cerrar</button>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,10 @@ import umg.programacion.Beneficio_Cafe.agricultor.piloto.*;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTranportistaReposity;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTransportista;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.EstadoTransportistaReposity;
+
+import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/piloto")
@@ -40,11 +44,18 @@ public class PilotoController {
         nuevo.setTipoLicencia(tipoLicencia);
 
         pilotoReposity.save(nuevo);
-        return ResponseEntity.ok("El piloto se ha creado con exito");
+        return ResponseEntity.ok(Map.of("mensaje","El piloto se ha creado con exito"));
     }
 
     @GetMapping
     public ResponseEntity<Page<DTOListarPiloto>> listarPiloto(Pageable paginacion){
         return ResponseEntity.ok(pilotoReposity.findAll(paginacion).map(DTOListarPiloto::new));
+    }
+
+    @GetMapping("/tipoLicencia")
+    public ResponseEntity<List<DTOTipoLicencia>> tipoLicencia(){
+        return ResponseEntity.ok(tipoLicenciaReposity.findAll()
+                .stream()
+                .map(DTOTipoLicencia::new).toList());
     }
 }

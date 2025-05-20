@@ -1,0 +1,46 @@
+<div class="transportista-container">
+  <div class="encabezado">
+    <h2>Listado de Pilotos</h2>
+    <button class="btn-nuevo" (click)="irANuevo()">+ Nuevo Piloto</button>
+    <button class="btn-regresar" (click)="regresar()">🏠 Inicio</button>
+  </div>
+
+  <div class="tabla-scroll">
+    <table class="transportista-table">
+      <thead>
+        <tr>
+          <th>NIT</th>
+          <th>CUI</th>
+          <th>Nombre</th>
+          <th>Fecha Nacimiento</th>
+          <th>Tipo Licencia</th>
+          <th>Vencimiento Licencia</th>
+          <th>Disponible</th>
+          <th>Estado</th>
+          <th>Pesaje Asociado</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pilotoList">
+          <td>{{ p.nitTransportista }}</td>
+          <td>{{ p.cui }}</td>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ p.tipoLicencia }}</td>
+          <td>{{ p.fechaVencimientoLicencia | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ p.disponible ? 'Sí' : 'No' }}</td>
+          <td>{{ p.estado }}</td>
+          <td>{{ p.pesajeAsociado || 'pendiente' }}</td>
+          <td>{{ p.observaciones }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="paginacion">
+    <button (click)="paginaAnterior()" [disabled]="page === 0">Anterior</button>
+    <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+    <button (click)="siguientePagina()" [disabled]="page >= totalPages - 1">Siguiente</button>
+  </div>
+</div>

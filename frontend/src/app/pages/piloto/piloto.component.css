@@ -1,0 +1,73 @@
+.transportista-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-nuevo, .btn-regresar {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-nuevo {
+  background-color: #4CAF50;
+  color: white;
+  margin-right: 10px;
+}
+
+.btn-regresar {
+  background-color: #2196F3;
+  color: white;
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+}
+
+.transportista-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transportista-table th,
+.transportista-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.transportista-table th {
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+.paginacion {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.paginacion button {
+  padding: 6px 12px;
+  margin: 0 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dddddd;
+  cursor: pointer;
+}
+
+.paginacion span {
+  font-weight: bold;
+}

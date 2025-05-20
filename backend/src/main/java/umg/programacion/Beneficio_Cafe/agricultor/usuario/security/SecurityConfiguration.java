@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/transporte").authenticated()
                         .requestMatchers("/transportista/all").authenticated()
                         .requestMatchers("/transporte/tipoPlaca").authenticated()
+                        .requestMatchers("/piloto/tipoLicencia").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

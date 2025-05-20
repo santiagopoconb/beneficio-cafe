@@ -37,6 +37,17 @@ export const routes: Routes = [
       import('./pages/transporte/nuevo-transporte/nuevo-transporte.component').then(m => m.NuevoTransporteComponent),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'piloto',
+    loadComponent: () => import('./pages/piloto/piloto.component').then(m => m.PilotoComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'nuevo-piloto',
+    loadComponent: () => import('./pages/piloto/nuevo-piloto/nuevo-piloto.component').then(m => m.NuevoPilotoComponent),
+    canActivate: [AuthGuard]
+  },
+
 
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL
 ];
