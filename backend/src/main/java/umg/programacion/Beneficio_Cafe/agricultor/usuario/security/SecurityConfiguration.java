@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/transportista/all").authenticated()
                         .requestMatchers("/transporte/tipoPlaca").authenticated()
                         .requestMatchers("/piloto/tipoLicencia").authenticated()
+                        .requestMatchers("/pesaje/medidaPeso").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
