@@ -24,15 +24,18 @@ export class LoginComponent {
       const token = response.jwtToken;
       const usuario = response.usuario;
       const rol = response.rol;
+      const nitAgricultor = response.nitAgricultor;
 
       // ✅ Guardar todo ANTES de navegar
       this.authService.guardarToken(token);
       sessionStorage.setItem('usuario', usuario);
       sessionStorage.setItem('rol', rol.toString());
+      sessionStorage.setItem('nitAgricultor', nitAgricultor);
 
       console.log('Token recibido:', token);
       console.log('usuario recibido', usuario);
       console.log('Rol recibido: ', rol);
+      console.log('NitAg recibido: ', nitAgricultor);
 
       // ✅ Esperar a que se almacene antes de navegar
       setTimeout(() => {

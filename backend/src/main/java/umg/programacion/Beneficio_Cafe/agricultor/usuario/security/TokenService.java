@@ -6,8 +6,10 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.Usuario;
+import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficio;
 
 import java.security.AlgorithmConstraints;
 import java.time.Instant;
@@ -20,13 +22,31 @@ public class TokenService {
     @Value("{api.security.secret")
     private String apiSecret;
 
-    public String generarToken(Usuario usuario) {
+    public String generarToken(UserDetails usuario) {
+        String esquema;
+        String rol;
+        Long idUsuario;
+
+        if(usuario instanceof Usuario usuarioAgricultor) {
+            esquema = "agricultor";
+            rol = usuarioAgricultor.getIdRol().getRol();
+            idUsuario = usuarioAgricultor.getIdUsuario();
+        } else if(usuario instanceof UsuarioBeneficio usuarioBeneficio) {
+            esquema = "beneficio";
+            rol = usuarioBeneficio.getIdRol().getRol();
+            idUsuario = usuarioBeneficio.getIdUsuario();
+        } else {
+            throw new RuntimeException("Tipo de usuario no encontrado");
+        }
+
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
                     .withIssuer("beneficio cafe")
-                    .withSubject(usuario.getUsuario())
-                    .withClaim("idUsuario", usuario.getIdUsuario())
+                    .withSubject(usuario.getUsername())
+                    .withClaim("idUsuario", idUsuario)
+                    .withClaim("rol", rol)
+                    .withClaim("esquema", esquema)
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);
         }catch (JWTCreationException exception){

@@ -10,15 +10,20 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import umg.programacion.Beneficio_Cafe.agricultor.usuario.Usuario;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.UsuarioReposity;
+import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficioReposity;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.util.Optional;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private UsuarioReposity usuarioReposity;
+    @Autowired
+    private UsuarioBeneficioReposity usuarioBeneficioReposity;
     @Autowired
     private TokenService tokenService;
     @Override
@@ -28,10 +33,18 @@ public class SecurityFilter extends OncePerRequestFilter {
             var token = authHeader.replace("Bearer ", "");
             var subjet = tokenService.getSubject(token);
             if (subjet != null) {
-                var usuario = usuarioReposity.findByUsuario(subjet);
-                var athentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(athentication);
-                //System.out.println("Usuario: " + usuario);
+                Optional<Usuario> usuarioAgricultor =usuarioReposity.findByUsuario(subjet);
+                if(usuarioAgricultor.isPresent()) {
+                    var usuario = usuarioAgricultor.get();
+                    var athentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(athentication);
+                    //System.out.println("Usuario: " + usuario);
+                } else {
+                    var usuarioBeneficio = usuarioBeneficioReposity.findByUsuario(subjet)
+                            .orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+                    var athentication = new UsernamePasswordAuthenticationToken(usuarioBeneficio,null,usuarioBeneficio.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(athentication);
+                }
             }
         }
         filterChain.doFilter(request, response);

@@ -30,6 +30,7 @@ public class AutenticacionAgricultor {
         return ResponseEntity.ok(new DTOJwtRespuesta(
                 jwtToken,
                 usuario.getUsuario(),
-                (int) usuario.getIdRol().getIdRol()));
+                (int) usuario.getIdRol().getIdRol(),
+                usuario.getNitAgricultor()));
     }
 }
