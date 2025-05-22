@@ -37,9 +37,13 @@ export class LoginComponent {
       console.log('Rol recibido: ', rol);
       console.log('NitAg recibido: ', nitAgricultor);
 
-      // ✅ Esperar a que se almacene antes de navegar
+      // ✅ Redirigir según el rol
       setTimeout(() => {
-        Promise.resolve().then(() => this.router.navigate(['/inicio']));
+        if (rol === 'ROLE_BENEFICIO') {
+          this.router.navigate(['/beneficio/inicio']);
+        } else {
+          this.router.navigate(['/inicio']);
+        }
       }, 0);
     },
     error: () => {

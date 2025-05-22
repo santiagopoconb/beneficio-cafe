@@ -15,6 +15,8 @@ export class InicioComponent {
 
   constructor(private router: Router) {}
 
+  fechaLogin: string = new Date().toLocaleString('es-GT');
+  
   cerrarSesion() {
     sessionStorage.clear();
     this.router.navigate(['/login']);

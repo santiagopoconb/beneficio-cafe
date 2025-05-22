@@ -1,0 +1,19 @@
+<div class="contenedor">
+  <nav class="menu-lateral">
+    <h3>Menú</h3>
+    <button (click)="navegar('/beneficio/cuentas')">Cuentas</button>
+    <button (click)="navegar('/beneficio/transportista-beneficio')">Transportistas</button>
+    <button (click)="navegar('/beneficio/transportes')">Transportes</button>
+    <button (click)="navegar('/beneficio/pilotos')">Pilotos</button>
+    <button (click)="navegar('/beneficio/agricultores')">Agricultores</button>
+    <button (click)="salir()">Salir</button>
+    
+    <div class="footer-izquierdo">
+      Inicio de sesión: {{ fechaLogin }}
+    </div>
+  
+  </nav>
+  <main class="contenido">
+    <h1>Bienvenido al módulo de Beneficio</h1>
+  </main>
+</div>

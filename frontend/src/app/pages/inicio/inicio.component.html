@@ -9,8 +9,15 @@
       <li><a routerLink="/pesaje">Pesaje</a></li>
       <li><a href="#" (click)="cerrarSesion()">Salir</a></li>
     </ul>
-  </nav>
 
+    <div class="footer-izquierdo">
+      Inicio de sesión: {{ fechaLogin }}
+    </div>
+
+  </nav>
+<main class="main-content">
+    <h1>Bienvenido al módulo de Agricultor</h1>
+</main>
   <!-- Contenido principal -->
 <div class="main-content">
   <router-outlet></router-outlet>

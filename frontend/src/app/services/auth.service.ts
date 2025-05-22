@@ -29,4 +29,8 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.obtenerToken();
   }
+
+  obtenerRol(): string | null {
+    return sessionStorage.getItem('rol');
+  }
 }

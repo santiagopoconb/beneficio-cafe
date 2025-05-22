@@ -23,12 +23,11 @@ public class UsuarioBeneficio implements UserDetails {
     private long idUsuario;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol")
-    private Rol idRol;
+    private RolBeneficio idRol;
     private String nombre;
     private String password;
     private String usuario;
     private String estado;
-    private String nitAgricultor;
 
     public UsuarioBeneficio (DTOUsuarioBeneficio dtoUsuarioBeneficio){
         this.usuario = dtoUsuarioBeneficio.usuario();

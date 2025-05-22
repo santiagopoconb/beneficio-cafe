@@ -14,6 +14,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+      path: 'beneficio/inicio',
+      canActivate: [AuthGuard],
+      loadComponent: () =>
+        import('./pages/beneficio/inicio-beneficio/inicio-beneficio.component').then(m => m.InicioBeneficioComponent)
+    },
+  {
   path: 'transportista',
   loadComponent: () =>
     import('./pages/transportista/transportista.component').then(m => m.TransportistaComponent),
@@ -57,6 +63,21 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/pesaje/crear-pesaje/crear-pesaje.component').then(m => m.CrearPesajeComponent),
     canActivate: [AuthGuard]
   },
+
+
+
+
+
+
+//Beneficio
+  {
+    path: 'beneficio/transportista-beneficio',
+    loadComponent: () =>
+      import('./pages/beneficio/transportista-beneficio/transportista-beneficio.component')
+        .then(m => m.TransportistasBeneficiarioComponent),
+      canActivate: [AuthGuard]
+  },
+
 
 
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL
