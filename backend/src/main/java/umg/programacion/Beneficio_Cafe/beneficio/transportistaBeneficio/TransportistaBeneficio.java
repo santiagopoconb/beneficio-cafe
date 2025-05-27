@@ -21,7 +21,7 @@ public class TransportistaBeneficio {
     private String nitAgricultor;
     private String nitTransportista;
     private String nombreTransportista;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado")
     private EstadoTransportistaBeneficio estadoTransportista;
     private String usuarioCreacion;
@@ -32,6 +32,21 @@ public class TransportistaBeneficio {
             EstadoTransportistaBeneficio estado = new EstadoTransportistaBeneficio();
             estado.setIdEstadoTransportista(u.estadoTransportista());
             this.estadoTransportista = estado;
+            this.usuarioCreacion = u.usuarioCreacion();
+            this.fechaCreacion = LocalDateTime.now();
         }
+    }
+
+    public TransportistaBeneficio (DTOReplicaTransportista replicaTransportista) {
+        this.nitAgricultor = replicaTransportista.nitAgricultor();
+        this.nitTransportista = replicaTransportista.nitTransportista();
+        this.nombreTransportista = replicaTransportista.nombreTranportista();
+
+        EstadoTransportistaBeneficio estadoActivo = new EstadoTransportistaBeneficio();
+        estadoActivo.setIdEstadoTransportista(1L);
+        this.estadoTransportista = estadoActivo;
+
+        this.usuarioCreacion = replicaTransportista.usuarioCreacion();
+        this.fechaCreacion = LocalDateTime.now();
     }
 }

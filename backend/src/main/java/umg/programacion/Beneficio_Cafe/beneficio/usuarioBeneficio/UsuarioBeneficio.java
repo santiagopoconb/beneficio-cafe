@@ -21,7 +21,7 @@ public class UsuarioBeneficio implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUsuario;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol")
     private RolBeneficio idRol;
     private String nombre;

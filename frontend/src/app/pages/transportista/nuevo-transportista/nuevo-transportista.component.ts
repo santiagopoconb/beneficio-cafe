@@ -20,14 +20,22 @@ export class NuevoTransportistaComponent implements OnInit {
   transportista = {
     nitTransportista: '',
     nombreTransportista: '',
-    usuarioCreacion: ''
+    usuarioCreacion: '',
+    nitAgricultor: ''
   };
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    const usuario = localStorage.getItem('usuario');
+    const usuario = sessionStorage.getItem('usuario');
     this.transportista.usuarioCreacion = usuario || 'desconocido';
+
+    const nitAgricultor = sessionStorage.getItem('nitAgricultor');
+    if (nitAgricultor) {
+      this.transportista.nitAgricultor = nitAgricultor;
+    } else {
+      alert('Error: No se encontró nitAgricultor. Inicia sesión nuevamente.');
+    }
   }
 
 mensajeExito = '';

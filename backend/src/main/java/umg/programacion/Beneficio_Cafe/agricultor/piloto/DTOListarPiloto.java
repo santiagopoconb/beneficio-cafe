@@ -1,14 +1,15 @@
 package umg.programacion.Beneficio_Cafe.agricultor.piloto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public record DTOListarPiloto(
         String nitTransportista,
         String cui,
         String nombre,
-        Date fechaNacimiento,
+        LocalDate fechaNacimiento,
         String tipoLicencia,
-        Date fechaVencimientoLicencia,
+        LocalDate fechaVencimientoLicencia,
         boolean disponible,
         String estado,
         String observaciones

@@ -18,10 +18,10 @@ public class CatalogoTransporte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idTransporte;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_transportista")
     private CatalogoTransportista idTransportista;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_placa")
     private TipoPlaca idPlaca;
     @Column(name = "placa", unique = true)
@@ -51,5 +51,14 @@ public class CatalogoTransporte {
         EstadoTransportista estadoActivo = new EstadoTransportista();
         estadoActivo.setIdEstadoTransportista(1L);
         this.estadoTransporte = estadoActivo;
+    }
+
+    public void actualizarCatalogoTransporte(DTOActualizarCatalogoTransporte dto){
+        EstadoTransportista estado = new EstadoTransportista();
+        estado.setIdEstadoTransportista(dto.estadoTransportista());
+        this.estadoTransporte = estado;
+        this.observaciones = dto.observaciones();
+        this.usuarioCreacion = dto.usuarioCreacion();
+        this.fechaCreacion = LocalDateTime.now();
     }
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.CatalogoTransportista;
 import umg.programacion.Beneficio_Cafe.agricultor.transportista.EstadoTransportista;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -19,21 +20,21 @@ public class CatalogoPiloto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPiloto;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_transportista")
     private CatalogoTransportista idTransportista;
     @Column(name = "cui", unique = true)
     private String cui;
     private String nombre;
-    private Date fechaNacimiento;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private LocalDate fechaNacimiento;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_licencia")
     private TipoLicencia tipoLicencia;
-    private Date fechaVencimientoLicencia;
+    private LocalDate fechaVencimientoLicencia;
     private String usuarioCreacion;
     private LocalDateTime fechaCreacion;
     private boolean disponible;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "estado")
     private EstadoTransportista estadoPiloto;
     private String observaciones;
@@ -50,5 +51,14 @@ public class CatalogoPiloto {
         EstadoTransportista estadoActivo = new EstadoTransportista();
         estadoActivo.setIdEstadoTransportista(1L);
         this.estadoPiloto = estadoActivo;
+    }
+
+    public void actualizarCatalogoPiloto(DTOActualizarCatalogoPiloto dto){
+        EstadoTransportista estado = new EstadoTransportista();
+        estado.setIdEstadoTransportista(dto.estado());
+        this.estadoPiloto = estado;
+        this.observaciones = dto.observaciones();
+        this.usuarioCreacion = dto.usuarioCreacion();
+        this.fechaCreacion = LocalDateTime.now();
     }
 }

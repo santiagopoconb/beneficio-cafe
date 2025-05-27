@@ -7,6 +7,8 @@ public record DTOCrearTransportista(
         @NotBlank
         String nombreTransportista,
         @NotBlank
-        String usuarioCreacion
+        String usuarioCreacion,
+        @NotBlank
+        String nitAgricultor
 ) {
 }
