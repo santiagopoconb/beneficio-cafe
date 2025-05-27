@@ -1,0 +1,25 @@
+<div class="cambiar-estado-container">
+  <h2>Cambiar Estado de Transportista</h2>
+
+  <form [formGroup]="form">
+    <div>
+      <label>NIT Transportista</label>
+      <input formControlName="nitTransportista" readonly>
+    </div>
+
+    <div>
+      <label>Nuevo Estado</label>
+      <select formControlName="estadoTransportista">
+            <option value="">Seleccione un estado</option>
+            <option *ngFor="let estado of estados" [value]="estado.idEstadoTransportistaBeneficio">
+                {{ estado.estadoTransportistaBeneficio }}
+            </option>
+        </select>
+    </div>
+
+    <div class="acciones">
+      <button type="button" (click)="guardar()" [disabled]="form.invalid">Guardar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

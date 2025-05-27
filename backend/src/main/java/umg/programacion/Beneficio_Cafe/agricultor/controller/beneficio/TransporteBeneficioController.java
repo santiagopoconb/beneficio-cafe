@@ -2,6 +2,9 @@ package umg.programacion.Beneficio_Cafe.agricultor.controller.beneficio;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import umg.programacion.Beneficio_Cafe.agricultor.transporte.DTOActualizarCatalogoTransporte;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.security.TokenService;
-import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.DTOActualizarTransporteBeneficio;
-import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.DTOReplicaTransporteBeneficio;
-import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.TransporteBeneficio;
-import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.TransporteBeneficioReposity;
+import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.*;
 import umg.programacion.Beneficio_Cafe.beneficio.transportistaBeneficio.TransportistaBeneficio;
 import umg.programacion.Beneficio_Cafe.beneficio.transportistaBeneficio.TransportistaBeneficioReposity;
 
@@ -72,5 +72,10 @@ public class TransporteBeneficioController {
 
         return ResponseEntity.ok(Map.of("mensaje", "Transporte actualizado"));
 
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DTOListarTransporteBeneficio>> listarTransporteBeneficio(@PageableDefault(size =  10) Pageable paginacion ){
+        return ResponseEntity.ok(transporteBeneficioReposity.findAll(paginacion).map(DTOListarTransporteBeneficio::new));
     }
 }

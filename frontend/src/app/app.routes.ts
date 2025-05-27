@@ -77,7 +77,13 @@ export const routes: Routes = [
         .then(m => m.TransportistasBeneficiarioComponent),
       canActivate: [AuthGuard]
   },
-
+  {
+    path: 'beneficio/cambiar-estado-transportista',
+    loadComponent: () =>
+      import('./pages/beneficio/transportista-beneficio/actualizar-transportista/cambiar-estado-transportista.component')
+        .then(m => m.CambiarEstadoTransportistaComponent),
+    canActivate: [AuthGuard]
+  },
 
 
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL

@@ -14,4 +14,8 @@ export class TransportistaBeneficioService {
   listarTodos(page: number = 0): Observable<any> {
     return this.http.get<any>(`${this.url}?page=${page}`);
   }
+
+  actualizarEstado(payload: any) {
+  return this.http.put(`${this.url}`, payload);
+}
 }

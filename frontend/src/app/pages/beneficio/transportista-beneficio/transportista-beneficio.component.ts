@@ -47,7 +47,12 @@ export class TransportistasBeneficiarioComponent implements OnInit {
   }
 
   cambiarEstado(transportista: any): void {
-    console.log('Cambiar estado:', transportista);
+  this.router.navigate(['/beneficio/cambiar-estado-transportista'], {
+      queryParams: {
+        nitTransportista: transportista.nitTransportista,
+        estadoActual: transportista.estadoTransportista // Ahora enviamos el texto (por ejemplo "Activo")
+      }
+    });
   }
 
   regresarInicio(): void {
