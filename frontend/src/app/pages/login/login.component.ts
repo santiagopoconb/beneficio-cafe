@@ -47,7 +47,7 @@ export class LoginComponent {
       }, 0);
     },
     error: () => {
-      this.errorMessage = 'Usuario o contraseña incorrectos.';
+      this.errorMessage = 'Error al autenticar';
     }
   });
 }

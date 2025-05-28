@@ -1,44 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { TransporteBeneficioService } from '../../../services/transporte-beneficio.service';
+import { PilotoBeneficioService } from '../../../services/piloto-beneficio-service';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
-  selector: 'app-transporte-beneficiario',
+  selector: 'app-piloto-beneficiario',
   imports: [CommonModule, FormsModule],
-  templateUrl: './././transporte-beneficio.component.html',
-  styleUrls: ['./././transporte-beneficio.component.css']
+  templateUrl: './././piloto-beneficio.component.html',
+  styleUrls: ['./././piloto-beneficio.component.css']
 })
 
-export class TransporteBeneficiarioComponent implements OnInit {
-  transporte: any[] = [];
-  transporteFiltrado: any[] = [];
+export class PiltoBeneficiarioComponent implements OnInit {
+  piloto: any[] = [];
+  pilotoFiltrado: any[] = [];
   paginaActual = 0;
   totalPaginas = 0;
 
-  busquedaPlaca = '';
+  busquedaCui = '';
   filtroEstado = '';
   estados: any[] = []; 
 
   constructor(
-    private transporteBeneficioService: TransporteBeneficioService,
+    private pilotoBeneficioService: PilotoBeneficioService,
     private router: Router,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.cargarTransporte();
+    this.cargarPiloto();
     this.cargarEstados();
   }
 
-  cargarTransporte(): void {
-    this.transporteBeneficioService.listarTodos(this.paginaActual)
+  cargarPiloto(): void {
+    this.pilotoBeneficioService.listarTodos(this.paginaActual)
       .subscribe(data => {
-        this.transporte = data.content;
-        this.transporteFiltrado = [...this.transporte];
+        this.piloto = data.content;
+        this.pilotoFiltrado = [...this.piloto];
         this.totalPaginas = data.totalPages;
       });
   }
@@ -53,39 +53,40 @@ export class TransporteBeneficiarioComponent implements OnInit {
 
   aplicarFiltros(): void {
   console.log('Filtro estado seleccionado (id):', this.filtroEstado);
-  this.transporteBeneficioService.listarTodos(this.paginaActual, this.busquedaPlaca, this.filtroEstado)
+  console.log('Valor de busqueda cui', this.busquedaCui)
+  this.pilotoBeneficioService.listarTodos(this.paginaActual, this.busquedaCui, this.filtroEstado)
     .subscribe(data => {
-      this.transporte = data.content;
-      this.transporteFiltrado = [...this.transporte];
+      this.piloto = data.content;
+      this.pilotoFiltrado = [...this.piloto];
       this.totalPaginas = data.totalPages;
     });
 }
 
   limpiarFiltros(): void {
-    this.busquedaPlaca = '';
+    this.busquedaCui = '';
     this.filtroEstado = '';
-    this.cargarTransporte();
+    this.cargarPiloto();
   }
 
   paginaAnterior(): void {
     if (this.paginaActual > 0) {
       this.paginaActual--;
-      this.cargarTransporte();
+      this.cargarPiloto();
     }
   }
 
   paginaSiguiente(): void {
     if (this.paginaActual + 1 < this.totalPaginas) {
       this.paginaActual++;
-      this.cargarTransporte();
+      this.cargarPiloto();
     }
   }
 
-  cambiarEstado(transporte: any): void {
-  this.router.navigate(['/beneficio/cambiar-estado-transporte'], {
+  cambiarEstado(piloto: any): void {
+  this.router.navigate(['/beneficio/cambiar-estado-piloto'], {
       queryParams: {
-        placa: transporte.placa,
-        estadoActual: transporte.estado // Ahora enviamos el texto (por ejemplo "Activo")
+        cui: piloto.cui,
+        estadoActual: piloto.estado // Ahora enviamos el texto (por ejemplo "Activo")
       }
     });
   }

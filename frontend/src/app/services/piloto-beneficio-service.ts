@@ -5,15 +5,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TransporteBeneficioService {
+export class PilotoBeneficioService {
 
-  private url = 'http://localhost:8081/beneficio/transporte';
+  private url = 'http://localhost:8081/beneficio/piloto';
 
   constructor(private http: HttpClient) {}
 
-  listarTodos(page: number = 0, placa?: string, estado?: string): Observable<any> {
+  listarTodos(page: number = 0, cui?: string, estado?: string): Observable<any> {
   let params = `?page=${page}`;
-  if (placa) params += `&placa=${encodeURIComponent(placa)}`;
+  if (cui) params += `&cui=${encodeURIComponent(cui)}`;
   if (estado) params += `&estado=${encodeURIComponent(estado)}`;
   return this.http.get<any>(`${this.url}${params}`);
 }

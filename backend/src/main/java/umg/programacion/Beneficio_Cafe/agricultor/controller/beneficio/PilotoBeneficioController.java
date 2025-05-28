@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import umg.programacion.Beneficio_Cafe.agricultor.piloto.DTOActualizarCatalogoPiloto;
-import umg.programacion.Beneficio_Cafe.agricultor.transporte.DTOActualizarCatalogoTransporte;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.security.TokenService;
 import umg.programacion.Beneficio_Cafe.beneficio.pilotoBenefio.*;
-import umg.programacion.Beneficio_Cafe.beneficio.transporteBeneficio.TransporteBeneficioReposity;
 import umg.programacion.Beneficio_Cafe.beneficio.transportistaBeneficio.TransportistaBeneficio;
 import umg.programacion.Beneficio_Cafe.beneficio.transportistaBeneficio.TransportistaBeneficioReposity;
 
@@ -73,7 +71,20 @@ public class PilotoBeneficioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DTOListarPilotoBeneficio>> listarPilotoBeneficio(@PageableDefault(size =  10) Pageable paginacion){
-        return ResponseEntity.ok(pilotoBeneficioReposity.findAll(paginacion).map(DTOListarPilotoBeneficio::new));
+    public ResponseEntity<Page<DTOListarPilotoBeneficio>> listarPilotoBeneficio(@PageableDefault(size =  10) Pageable paginacion,
+                                                                                @RequestParam(required = false) String cui,
+                                                                                @RequestParam(required = false) Long estado){
+        Page<PilotoBeneficio> resultado;
+
+        if((cui == null || cui.isEmpty() ) && estado == null){
+            resultado = pilotoBeneficioReposity.findAll(paginacion);
+        } else if((cui != null && !cui.isEmpty()) && estado == null){
+            resultado = pilotoBeneficioReposity.findByCuiContainingIgnoreCase(cui, paginacion);
+        } else if((cui == null || cui.isEmpty()) && estado != null){
+            resultado = pilotoBeneficioReposity.findByIdEstado_IdEstadoTransportista(estado, paginacion);
+        } else {
+            resultado = pilotoBeneficioReposity.findByCuiContainingIgnoreCaseAndIdEstado_IdEstadoTransportista(cui, estado, paginacion);
+        }
+        return ResponseEntity.ok(resultado.map(DTOListarPilotoBeneficio::new));
     }
 }

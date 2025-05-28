@@ -1,0 +1,30 @@
+<div class="cambiar-estado-container">
+  <h2>Cambiar Estado de Piloto</h2>
+
+  <form [formGroup]="form">
+    <div>
+      <label>Cui</label>
+      <input formControlName="cui" readonly>
+    </div>
+
+    <div>
+      <label>Nuevo Estado</label>
+      <select formControlName="estadoTransportista">
+            <option value="">Seleccione un estado</option>
+            <option *ngFor="let estado of estados" [value]="estado.idEstadoTransportistaBeneficio">
+                {{ estado.estadoTransportistaBeneficio }}
+            </option>
+        </select>
+    </div>
+
+    <div>
+      <label>Observaciones</label>
+      <textarea formControlName="observaciones" cols="65"></textarea>
+    </div>
+
+    <div class="acciones">
+      <button type="button" (click)="guardar()" [disabled]="form.invalid">Guardar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

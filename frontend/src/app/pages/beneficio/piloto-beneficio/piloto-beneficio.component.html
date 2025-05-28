@@ -1,11 +1,11 @@
 <div class="transportista-container">
   <div class="encabezado">
-    <h2>Transporte del Beneficio</h2>
+    <h2>Pilotos del Beneficio</h2>
     <button class="btn-regresar" (click)="regresarInicio()">Regresar al inicio</button>
   </div>
 
   <div class="filtros">
-  <input type="text" [(ngModel)]="busquedaPlaca" placeholder="Buscar por placa">
+  <input type="text" [(ngModel)]="busquedaCui" placeholder="Buscar por cui">
   <select [(ngModel)]="filtroEstado" (ngModelChange)="aplicarFiltros()">
   <option value="">Todos los estados</option>
   <option *ngFor="let e of estados" [value]="e.idEstadoTransportistaBeneficio">
@@ -21,23 +21,25 @@
       <thead>
         <tr>
           <th>NIT Agricultor</th>
-          <th>Placa</th>
+          <th>Cui</th>
+          <th>Nombre</th>
           <th>Estado</th>
           <th>Observaciones</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of transporte">
+        <tr *ngFor="let t of piloto">
           <td>{{ t.nitAgricultor }}</td>
-          <td>{{ t.placa }}</td>
+          <td>{{ t.cui }}</td>
+          <td>{{ t.nombre }}</td>
           <td>{{ t.estado }}</td>
           <td>{{ t.observaciones }}</td>
           <td>
             <button class="btn-nuevo" (click)="cambiarEstado(t)">Cambiar Estado</button>
           </td>
         </tr>
-        <tr *ngIf="transporteFiltrado.length === 0">
+        <tr *ngIf="pilotoFiltrado.length === 0">
           <td colspan="5">Sin registros</td>
         </tr>
       </tbody>

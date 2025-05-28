@@ -99,6 +99,21 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
 
+  {
+    path: 'beneficio/piloto-beneficio',
+    loadComponent: () =>
+      import('./pages/beneficio/piloto-beneficio/piloto-beneficio.component')
+        .then(m => m.PiltoBeneficiarioComponent),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'beneficio/cambiar-estado-piloto',
+    loadComponent: () =>
+      import('./pages/beneficio/piloto-beneficio/actualizar-transporte/cambiar-estado-piloto.component')
+        .then(m => m.CambiarEstadoPilotoComponent),
+    canActivate: [AuthGuard]
+  },
+
 
   { path: '**', redirectTo: 'login' } // ← ESTE VA SIEMPRE AL FINAL
 ];

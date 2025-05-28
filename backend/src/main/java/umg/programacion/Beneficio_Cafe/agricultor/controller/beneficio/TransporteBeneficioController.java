@@ -75,7 +75,19 @@ public class TransporteBeneficioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DTOListarTransporteBeneficio>> listarTransporteBeneficio(@PageableDefault(size =  10) Pageable paginacion ){
-        return ResponseEntity.ok(transporteBeneficioReposity.findAll(paginacion).map(DTOListarTransporteBeneficio::new));
+    public ResponseEntity<Page<DTOListarTransporteBeneficio>> listarTransporteBeneficio(@PageableDefault(size =  10) Pageable paginacion,
+                                                                                        @RequestParam(required = false) String placa,
+                                                                                        @RequestParam(required = false) Long estado){
+        Page<TransporteBeneficio> resultado;
+        if ((placa == null || placa.isEmpty()) && estado == null) {
+            resultado = transporteBeneficioReposity.findAll(paginacion);
+        } else if ((placa != null && !placa.isEmpty()) && estado == null) {
+            resultado = transporteBeneficioReposity.findByPlacaContainingIgnoreCase(placa, paginacion);
+        } else if ((placa == null || placa.isEmpty()) && estado != null) {
+            resultado = transporteBeneficioReposity.findByIdEstado_IdEstadoTransportista(estado, paginacion);
+        } else {
+            resultado = transporteBeneficioReposity.findByPlacaContainingIgnoreCaseAndIdEstado_IdEstadoTransportista(placa, estado, paginacion);
+        }
+        return ResponseEntity.ok(resultado.map(DTOListarTransporteBeneficio::new));
     }
 }
