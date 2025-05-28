@@ -1,0 +1,37 @@
+<div class="transportista-container">
+  <div class="encabezado">
+    <h2>Transporte del Beneficio</h2>
+    <button class="btn-regresar" (click)="regresarInicio()">Regresar al inicio</button>
+  </div>
+
+  <div class="tabla-scroll">
+    <table class="transportista-table">
+      <thead>
+        <tr>
+          <th>NIT Agricultor</th>
+          <th>Placa</th>
+          <th>Estado</th>
+          <th>Observaciones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transporte">
+          <td>{{ t.nitAgricultor }}</td>
+          <td>{{ t.placa }}</td>
+          <td>{{ t.estado }}</td>
+          <td>{{ t.observaciones }}</td>
+          <td>
+            <button class="btn-nuevo" (click)="cambiarEstado(t)">Cambiar Estado</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="paginacion">
+    <button (click)="paginaAnterior()" [disabled]="paginaActual === 0">Anterior</button>
+    <span>Página {{ paginaActual + 1 }} de {{ totalPaginas }}</span>
+    <button (click)="paginaSiguiente()" [disabled]="paginaActual + 1 >= totalPaginas">Siguiente</button>
+  </div>
+</div>
