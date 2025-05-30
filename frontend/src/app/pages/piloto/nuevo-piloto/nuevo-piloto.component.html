@@ -19,12 +19,15 @@
     </div>
 
     <div class="form-group">
-      <label for="cui">CUI</label>
-      <input id="cui" type="text" formControlName="cui">
-      <div class="error" *ngIf="pilotoForm.get('cui')?.touched && pilotoForm.get('cui')?.invalid">
-        Campo requerido
-      </div>
-    </div>
+  <label for="cui">CUI</label>
+  <input id="cui" type="text" formControlName="cui"
+         maxlength="13"
+         (keypress)="soloNumeros($event)" />
+  <div class="error" *ngIf="pilotoForm.get('cui')?.touched && pilotoForm.get('cui')?.errors">
+  <span *ngIf="pilotoForm.get('cui')?.errors?.['required']">Campo requerido.</span>
+  <span *ngIf="pilotoForm.get('cui')?.errors?.['pattern']">Debe contener solo números y exactamente 13 dígitos.</span>
+</div>
+</div>
 
     <div class="form-group">
       <label for="nombre">Nombre</label>

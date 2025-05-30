@@ -42,7 +42,7 @@ public class PilotoController {
     public ResponseEntity<?> crearPiloto(@RequestBody @Valid DTOCrearPiloto dto) {
         System.out.println("📢 Datos piloto recibidos desde el frontend: " + dto);
         if(pilotoReposity.findByCui(dto.cui()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ya existe un piloto registrado con el CUI " + dto.cui());
+            return ResponseEntity.badRequest().body(Map.of("message","Ya existe un piloto registrado con el CUI " + dto.cui()));
         }
 
         CatalogoTransportista transportista = tranportistaReposity.findByNitTransportista(dto.nitTransportista())

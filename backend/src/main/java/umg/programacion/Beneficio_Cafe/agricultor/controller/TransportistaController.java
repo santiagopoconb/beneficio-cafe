@@ -2,10 +2,8 @@ package umg.programacion.Beneficio_Cafe.agricultor.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +50,8 @@ public class TransportistaController {
 
     @PostMapping
     public ResponseEntity<?> crearTransportista(@RequestBody @Valid DTOCrearTransportista dtoCrearTransportista){
-        System.out.println("📢 Datos recibidos desde el frontend: " + dtoCrearTransportista);
-
+        //System.out.println("📢 Datos recibidos desde el frontend: " + dtoCrearTransportista);
+    try {
         CatalogoTransportista nuevo = new CatalogoTransportista(dtoCrearTransportista);
         transportistaReposity.save(nuevo);
 
@@ -74,7 +72,14 @@ public class TransportistaController {
         HttpEntity<DTOReplicaTransportista> request = new HttpEntity<>(dtoReplicaTransportista, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(replicUrl, request, String.class);
 
-        return ResponseEntity.ok(Map.of("mensaje","Transportista creado correctamente"));
+        return ResponseEntity.ok(Map.of("mensaje", "Transportista creado correctamente"));
+    } catch (DataIntegrityViolationException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("mensaje", "Error: El NIT del transportista ya existe."));
+    }catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("mensaje", "Error inesperado al crear el transportista."));
+         }
     }
 
     @PutMapping("/replica")

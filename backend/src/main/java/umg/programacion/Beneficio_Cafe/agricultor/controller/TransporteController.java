@@ -42,7 +42,8 @@ public class TransporteController {
     public ResponseEntity<?> crearTransporte(@RequestBody @Valid DTOCrearTransporte dto){
         //System.out.println("📢 Datos transporte recibidos desde el frontend: " + dto);
         if(transporteReposity.findByPlaca(dto.placa()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ya existe un transporte registrado con la placa " + dto.placa());
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Ya existe un transporte registrado con la placa " + dto.placa()));
         }
 
         CatalogoTransportista transportista = tranportistaReposity.findByNitTransportista(dto.nitTransportista())

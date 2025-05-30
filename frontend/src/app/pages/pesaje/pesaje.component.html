@@ -4,3 +4,38 @@
     <button class="btn-nuevo" (click)="irANuevo()">+ Crear Pesaje</button>
     <button class="btn-regresar" (click)="regresar()">🏠 Inicio</button>
   </div>
+
+  <table class="tabla-pesaje">
+    <thead>
+      <tr>
+        <th>Id Pesaje</th>
+        <th>Cuenta</th>
+        <th>Peso Total</th>
+        <th>Parcialidades</th>
+        <th>Fecha Envío</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Cuenta Ejemplo</td>
+        <td>1000 kg</td>
+        <td>3</td>
+        <td>2025-05-30</td>
+        <td>Activo</td>
+        <td><button class="btn-detalle">Ver Detalle</button></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Otra Cuenta</td>
+        <td>850 kg</td>
+        <td>2</td>
+        <td>2025-05-29</td>
+        <td>Pendiente</td>
+        <td><button class="btn-detalle">Ver Detalle</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

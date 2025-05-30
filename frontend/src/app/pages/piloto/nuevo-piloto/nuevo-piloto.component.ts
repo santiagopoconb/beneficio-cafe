@@ -32,7 +32,7 @@ export class NuevoPilotoComponent implements OnInit {
   ngOnInit(): void {
     this.pilotoForm = this.fb.group({
       nitTransportista: ['', Validators.required],
-      cui: ['', Validators.required],
+      cui: ['', [Validators.required, Validators.pattern('^[0-9]{13}$')]],
       nombre: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       tipoLicencia: ['', Validators.required],
@@ -90,12 +90,34 @@ export class NuevoPilotoComponent implements OnInit {
         this.mostrarModal = true;
       },
       error: (err) => {
-        console.error('Error al guardar piloto:', err);
-        this.mensajeError = err.error?.message || err.error || 'Error desconocido al registrar piloto.';
-        this.mostrarModalError = true;
+        console.error('Error al guardar transporte:', err);
+      console.log('Respuesta error completa:', JSON.stringify(err));
+
+      // 🔸 Capturar mensaje de error del backend (json.message)
+      let mensaje = '';
+
+      if (err.status === 400) {
+        // Si error es un objeto con "message"
+        if (err.error?.message) {
+          mensaje = err.error.message;
+        } else {
+          mensaje = 'Error al registrar piloto (datos inválidos).';
+        }
+      } else {
+        mensaje = 'Error inesperado. Intente nuevamente.';
+      }
+
+      alert(mensaje);
       }
     });
   }
+
+  soloNumeros(event: KeyboardEvent) {
+  const char = event.key;
+  if (!/^[0-9]$/.test(char)) {
+    event.preventDefault();
+  }
+}
 
   cerrarModal(): void {
     this.mostrarModal = false;

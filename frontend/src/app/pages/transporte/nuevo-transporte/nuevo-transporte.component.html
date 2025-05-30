@@ -16,7 +16,10 @@
     </select>
 
     <label>Placa:</label>
-    <input type="text" formControlName="placa">
+    <input type="text" formControlName="placa" maxlength="6" (keypress)="soloLetrasNumeros($event)">
+    <div *ngIf="transporteForm.get('placa')?.invalid && transporteForm.get('placa')?.touched">
+      La placa debe tener solo letras y números (máx 6).
+    </div>
 
     <label>Marca:</label>
     <input type="text" formControlName="marca">

@@ -1,58 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-interface RespuestaExito {
-  mensaje: string;
-}
-
 
 @Component({
   selector: 'app-nuevo-transportista',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './nuevo-transportista.component.html',
   styleUrls: ['./nuevo-transportista.component.css']
 })
 export class NuevoTransportistaComponent implements OnInit {
-  transportista = {
-    nitTransportista: '',
-    nombreTransportista: '',
-    usuarioCreacion: '',
-    nitAgricultor: ''
-  };
+  transporteForm!: FormGroup;
+  mensajeExito = '';
+  mostrarModal = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    const usuario = sessionStorage.getItem('usuario');
-    this.transportista.usuarioCreacion = usuario || 'desconocido';
-
+    const usuario = sessionStorage.getItem('usuario') || 'desconocido';
     const nitAgricultor = sessionStorage.getItem('nitAgricultor');
-    if (nitAgricultor) {
-      this.transportista.nitAgricultor = nitAgricultor;
-    } else {
+
+    if (!nitAgricultor) {
       alert('Error: No se encontró nitAgricultor. Inicia sesión nuevamente.');
+      return;
+    }
+
+    this.transporteForm = this.fb.group({
+      nitTransportista: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{1,8}$')]],
+      nombreTransportista: ['', Validators.required],
+      usuarioCreacion: [usuario],
+      nitAgricultor: [nitAgricultor]
+    });
+  }
+
+  soloLetrasNumeros(event: KeyboardEvent) {
+    const char = event.key;
+    const regex = /^[a-zA-Z0-9]$/;
+    if (!regex.test(char)) {
+      event.preventDefault();
     }
   }
 
-mensajeExito = '';
-mostrarModal = false;
-
   guardar(): void {
-    this.http.post<RespuestaExito>('http://localhost:8081/transportista', this.transportista)
-  .subscribe({
-    next: (respuesta) => {
-      this.mensajeExito = respuesta.mensaje;
-      this.mostrarModal = true;
-    },
-    error: (err) => {
-      console.error('Error al guardar:', err);
-      alert('Error al registrar transportista.');
+    if (this.transporteForm.valid) {
+      this.http.post('http://localhost:8081/transportista', this.transporteForm.value)
+        .subscribe({
+          next: (respuesta: any) => {
+            this.mensajeExito = respuesta.mensaje;
+            this.mostrarModal = true;
+          },
+          error: (err) => {
+            console.error('Error al guardar:', err);
+            if (err.error && err.error.mensaje) {
+              alert(err.error.mensaje);
+            } else {
+              alert('Error inesperado al registrar transportista.');
+            }
+          }
+        });
+    } else {
+      alert('Por favor complete todos los campos correctamente.');
     }
-  });
   }
 
   cancelar(): void {
@@ -60,11 +70,11 @@ mostrarModal = false;
   }
 
   navegarANuevo(): void {
-  this.router.navigate(['/transportista/nuevo']);
-    }
+    this.router.navigate(['/transportista/nuevo']);
+  }
 
-    cerrarModal(): void {
-  this.mostrarModal = false;
-  this.router.navigate(['/transportista']); // ✅ redirige
-    }
+  cerrarModal(): void {
+    this.mostrarModal = false;
+    this.router.navigate(['/transportista']);
+  }
 }

@@ -1,24 +1,32 @@
 <div class="transportista-container">
   <h2>Registrar Nuevo Transportista</h2>
 
-  <form (ngSubmit)="guardar()" #form="ngForm">
+  <form [formGroup]="transporteForm" (ngSubmit)="guardar()">
     <div class="form-group">
       <label for="nit">NIT</label>
-      <input type="text" id="nit" name="nit" [(ngModel)]="transportista.nitTransportista" required pattern="^[a-zA-Z0-9]{1,8}$"
-    maxlength="8" placeholder = "NIT sin guion"/>
+      <input type="text" id="nit" formControlName="nitTransportista"
+        maxlength="8" placeholder="NIT sin guion"
+        (keypress)="soloLetrasNumeros($event)" />
+      <div *ngIf="transporteForm.get('nitTransportista')?.invalid && transporteForm.get('nitTransportista')?.touched">
+        NIT es obligatorio y debe tener solo letras o números (máx 8).
+      </div>
     </div>
 
     <div class="form-group">
       <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" name="nombre" [(ngModel)]="transportista.nombreTransportista" required />
+      <input type="text" id="nombre" formControlName="nombreTransportista" placeholder="Nombre transportista" />
+      <div *ngIf="transporteForm.get('nombreTransportista')?.invalid && transporteForm.get('nombreTransportista')?.touched">
+        Nombre es obligatorio.
+      </div>
     </div>
 
     <div class="paginacion">
-      <button type="submit">Guardar</button>
+      <button type="submit" [disabled]="transporteForm.invalid">Guardar</button>
       <button type="button" (click)="cancelar()">Cancelar</button>
     </div>
   </form>
 </div>
+
 <!-- Modal de Éxito -->
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-contenido">

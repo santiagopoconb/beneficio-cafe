@@ -20,30 +20,7 @@ export class PesajeComponent implements OnInit {
 
   ngOnInit(): void {
     //this.cargarPilotos();
-  }/*
-
-  cargarPilotos(): void {
-    this.pilotoService.listarPilotos(this.page, this.size).subscribe({
-      next: (res) => {
-        this.pilotoList = res.content;
-        this.totalPages = res.totalPages;
-      }
-    });
   }
-
-  paginaAnterior(): void {
-    if (this.page > 0) {
-      this.page--;
-      this.cargarPilotos();
-    }
-  }
-
-  siguientePagina(): void {
-    if (this.page < this.totalPages - 1) {
-      this.page++;
-      this.cargarPilotos();
-    }
-  }*/
 
   irANuevo(): void {
     this.router.navigate(['/crear-pesaje']);

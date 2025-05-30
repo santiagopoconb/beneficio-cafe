@@ -28,7 +28,7 @@ export class NuevoTransporteComponent implements OnInit {
     this.transporteForm = this.fb.group({
       nitTransportista: ['', Validators.required],
       tipoPlaca: ['', Validators.required],
-      placa: ['', Validators.required],
+      placa: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{1,6}$')]],
       marca: ['', Validators.required],
       color: ['', Validators.required],
       linea: ['', Validators.required],
@@ -56,10 +56,12 @@ mostrarModalError = false;
 
   guardar(): void {
   const usuario = sessionStorage.getItem('usuario');
+  this.transporteForm.updateValueAndValidity();
   const formValue = this.transporteForm.value;
 
   const payload = {
     ...formValue,
+    placa: formValue.placa.toUpperCase(),  // Convertimos a mayúsculas
     usuarioCreacion: usuario || 'desconocido'
   };
 
@@ -71,10 +73,32 @@ mostrarModalError = false;
     error: (err) => {
       console.error('Error al guardar transporte:', err);
       console.log('Respuesta error completa:', JSON.stringify(err));
-      this.mensajeError = err.error?.message || err.error || 'Error desconocido al registrar transporte.';
-      this.mostrarModalError = true;
+
+      // 🔸 Capturar mensaje de error del backend (json.message)
+      let mensaje = '';
+
+      if (err.status === 400) {
+        // Si error es un objeto con "message"
+        if (err.error?.message) {
+          mensaje = err.error.message;
+        } else {
+          mensaje = 'Error al registrar transporte (datos inválidos).';
+        }
+      } else {
+        mensaje = 'Error inesperado. Intente nuevamente.';
+      }
+
+      alert(mensaje);
     }
   });
+}
+
+soloLetrasNumeros(event: KeyboardEvent) {
+  const char = event.key;
+  const regex = /^[a-zA-Z0-9]$/;
+  if (!regex.test(char)) {
+    event.preventDefault();
+  }
 }
 
   cancelar(): void {
