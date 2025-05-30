@@ -13,6 +13,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.Usuario;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.UsuarioReposity;
 import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficioReposity;
+import umg.programacion.Beneficio_Cafe.pesaje.usuarioPesaje.UsuarioPesaje;
+import umg.programacion.Beneficio_Cafe.pesaje.usuarioPesaje.UsuarioPesajeReposity;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -24,6 +26,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     private UsuarioReposity usuarioReposity;
     @Autowired
     private UsuarioBeneficioReposity usuarioBeneficioReposity;
+    @Autowired
+    private UsuarioPesajeReposity usuarioPesajeReposity;
     @Autowired
     private TokenService tokenService;
     @Override
@@ -40,10 +44,17 @@ public class SecurityFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(athentication);
                     //System.out.println("Usuario: " + usuario);
                 } else {
-                    var usuarioBeneficio = usuarioBeneficioReposity.findByUsuario(subjet)
-                            .orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
-                    var athentication = new UsernamePasswordAuthenticationToken(usuarioBeneficio,null,usuarioBeneficio.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(athentication);
+                    Optional<UsuarioPesaje> usuarioPesaje = usuarioPesajeReposity.findByUsuario(subjet);
+                    if(usuarioPesaje.isPresent()) {
+                        var usuario = usuarioPesaje.get();
+                        var athentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(athentication);
+                    } else {
+                        var usuarioBeneficio = usuarioBeneficioReposity.findByUsuario(subjet)
+                                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                        var athentication = new UsernamePasswordAuthenticationToken(usuarioBeneficio, null, usuarioBeneficio.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(athentication);
+                    }
                 }
             }
         }

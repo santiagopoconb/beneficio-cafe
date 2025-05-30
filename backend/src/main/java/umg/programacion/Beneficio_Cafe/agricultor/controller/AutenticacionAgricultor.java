@@ -14,6 +14,7 @@ import umg.programacion.Beneficio_Cafe.agricultor.usuario.security.DTOJwtRespues
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.security.DTOJwtToken;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.security.TokenService;
 import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficio;
+import umg.programacion.Beneficio_Cafe.pesaje.usuarioPesaje.UsuarioPesaje;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -37,6 +38,9 @@ public class AutenticacionAgricultor {
             nitAgricultor = usuarioAgricultor.getNitAgricultor();
             nombreRol = usuarioAgricultor.getIdRol().getRol();
             usuario = usuarioAgricultor.getUsuario();
+        } else if(userDetails instanceof UsuarioPesaje usuarioPesaje){
+            nombreRol = usuarioPesaje.getIdRol().getRol();
+            usuario = usuarioPesaje.getUsuario();
         } else if(userDetails instanceof UsuarioBeneficio usuarioBeneficio) {
             nombreRol = usuarioBeneficio.getIdRol().getRol();
             usuario = usuarioBeneficio.getUsuario();

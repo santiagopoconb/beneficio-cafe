@@ -41,7 +41,9 @@ export class LoginComponent {
       setTimeout(() => {
         if (rol === 'ROLE_BENEFICIO') {
           this.router.navigate(['/beneficio/inicio']);
-        } else {
+        } else if (rol === 'ROLE_PESOCABAL') {
+            this.router.navigate(['/pesaje/inicio']);
+          } else {
           this.router.navigate(['/inicio']);
         }
       }, 0);

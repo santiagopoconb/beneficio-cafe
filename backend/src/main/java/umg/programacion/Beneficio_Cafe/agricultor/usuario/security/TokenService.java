@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.Usuario;
 import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficio;
+import umg.programacion.Beneficio_Cafe.pesaje.usuarioPesaje.UsuarioPesaje;
 
 import java.security.AlgorithmConstraints;
 import java.time.Instant;
@@ -35,6 +36,10 @@ public class TokenService {
             esquema = "beneficio";
             rol = usuarioBeneficio.getIdRol().getRol();
             idUsuario = usuarioBeneficio.getIdUsuario();
+        } else if(usuario instanceof UsuarioPesaje usuarioPesaje) {
+            esquema ="pesaje";
+            rol = usuarioPesaje.getIdRol().getRol();
+            idUsuario = usuarioPesaje.getIdUsuario();
         } else {
             throw new RuntimeException("Tipo de usuario no encontrado");
         }

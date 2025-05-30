@@ -19,7 +19,13 @@ export const routes: Routes = [
       loadComponent: () =>
         import('./pages/beneficio/inicio-beneficio/inicio-beneficio.component').then(m => m.InicioBeneficioComponent)
     },
-  {
+    {
+    path: 'pesaje/inicio',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/pesaje/inicio-pesaje/inicio-pesaje.component').then(m => m.InicioPesajeComponent)
+    },
+    {
   path: 'transportista',
   loadComponent: () =>
     import('./pages/transportista/transportista.component').then(m => m.TransportistaComponent),

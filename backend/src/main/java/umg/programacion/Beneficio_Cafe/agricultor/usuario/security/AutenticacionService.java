@@ -9,6 +9,7 @@ import umg.programacion.Beneficio_Cafe.agricultor.usuario.Usuario;
 import umg.programacion.Beneficio_Cafe.agricultor.usuario.UsuarioReposity;
 import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficio;
 import umg.programacion.Beneficio_Cafe.beneficio.usuarioBeneficio.UsuarioBeneficioReposity;
+import umg.programacion.Beneficio_Cafe.pesaje.usuarioPesaje.UsuarioPesajeReposity;
 
 @Service
 public class AutenticacionService  implements UserDetailsService {
@@ -17,12 +18,16 @@ public class AutenticacionService  implements UserDetailsService {
     private UsuarioReposity usuarioReposity;
     @Autowired
     private UsuarioBeneficioReposity usuarioBeneficioReposity;
+    @Autowired
+    private UsuarioPesajeReposity usuarioPesajeReposity;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         return usuarioReposity.findByUsuario(username)
                 .map(user ->(UserDetails) user)
                 .or(()->usuarioBeneficioReposity.findByUsuario(username)
                         .map(user -> (UserDetails) user))
+                .or(()->usuarioPesajeReposity.findByUsuario(username)
+                        .map(user-> (UserDetails) user))
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 }
